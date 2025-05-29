@@ -1,7 +1,5 @@
 
 
-
-
 class HTMLNode:
     def __init__(self, tag=None, value=None, children=None, props=None):
         self.tag = tag
@@ -39,3 +37,29 @@ class LeafNode(HTMLNode):
             return f"{self.value}"
         return f"<{self.tag}>{self.value}</{self.tag}>"
     
+
+class ParentNode(HTMLNode):
+    def __init__(self, tag, children, props=None):
+        super().__init__(tag, children=children, props=props)
+
+    def to_html(self):
+        if self.tag == None or self.tag == "":
+            raise ValueError("Parent node needs a tag.")
+        if self.children == None:
+            raise ValueError("child argument required.")
+        
+        
+        if self.props: # Check if self.props is a non-empty dictionary
+            temp = []
+            for key, value in self.props.items():
+                formatted = f'{key}="{value}"'
+                temp.append(formatted)
+            prop_s = " ".join(temp)
+            html = f"<{self.tag} {prop_s}>" 
+        else:
+            html = f"<{self.tag}>"   
+                
+    
+        for child in self.children:
+            html = html + child.to_html()
+        return html + f"</{self.tag}>"
