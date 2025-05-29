@@ -28,14 +28,16 @@ class HTMLNode:
 
 class LeafNode(HTMLNode):
     def __init__(self, tag, value, props=None):
-        super().__init__(tag, value, props)
+        super().__init__(tag, value, props=props)
 
     def to_html(self):
         if self.value == None or self.value == "":
             raise ValueError("All leaf nodes must have a value.")
         if self.tag == None:
             return f"{self.value}"
-        return f"<{self.tag}>{self.value}</{self.tag}>"
+        
+                
+        return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
     
 
 class ParentNode(HTMLNode):
@@ -49,15 +51,7 @@ class ParentNode(HTMLNode):
             raise ValueError("child argument required.")
         
         
-        if self.props: # Check if self.props is a non-empty dictionary
-            temp = []
-            for key, value in self.props.items():
-                formatted = f'{key}="{value}"'
-                temp.append(formatted)
-            prop_s = " ".join(temp)
-            html = f"<{self.tag} {prop_s}>" 
-        else:
-            html = f"<{self.tag}>"   
+        html = f"<{self.tag}{self.props_to_html()}>"   
                 
     
         for child in self.children:

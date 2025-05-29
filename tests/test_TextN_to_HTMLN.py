@@ -19,3 +19,8 @@ class test_Text_to_HTML(unittest.TestCase):
         node = TextNode("Text with no value.", TextType)
         self.assertRaises(Exception, lambda: text_node_to_html_node(node))
 
+
+
+
+if __name__ == "__main__":
+    unittest.main()
