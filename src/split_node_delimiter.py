@@ -17,6 +17,17 @@ def split_nodes_delimiter(
         text_type: TextType
         ):
     
+    delimiter_dict = {
+        "**": TextType.BOLD,
+        "_": TextType.ITALIC,
+        "`": TextType.CODE
+    }
+
+    if delimiter not in delimiter_dict:
+        raise ValueError("Unsupported delimiter")
+    if delimiter_dict[delimiter] != text_type:
+        raise ValueError("delimiter does not match expected text type")
+    
     new_nodes = []
 
     for node in old_nodes:
