@@ -2,10 +2,10 @@ import re
 
 def extract_markdown_images(text):
     text_to_ext = text
-    pattern = r"!\[([^\[\]]+)\]\(([^()]+)\)"
+    img_pattern = r"!\[([^\[\]]+)\]\(([^()]+)\)"
     matches = []
     
-    matches = re.findall(pattern, text_to_ext)
+    matches = re.findall(img_pattern, text_to_ext)
     if matches != []:    
         return matches
     else:
@@ -14,11 +14,13 @@ def extract_markdown_images(text):
 
 def extract_markdown_links(text):
     text_to_ext = text
-    pattern = r"\[([^\[\]]+)\]\(([^()]+)\)"
+    link_pattern = r"(?<!!)\[([^\[\]]+)\]\(([^()]+)\)"
     matches = []
 
-    matches = re.findall(pattern, text_to_ext)
+    matches = re.findall(link_pattern, text_to_ext)
     if matches != []:    
         return matches
     else:
         raise Exception("Invalid link markdown")
+    
+

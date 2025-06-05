@@ -66,16 +66,18 @@ class TestSplitDelimiter(unittest.TestCase):
             split_nodes_delimiter([node], "`", TextType.CODE)
 
     def test_unsupported_delimiter_raises(self):
+        # '@@@' not in DELIMITER_TYPE_MAP
         node = TextNode("Some text", TextType.TEXT)
 
         with self.assertRaises(ValueError) as context:
-            split_nodes_delimiter([node], "@@@", TextType.CODE)  # '@@@' not in DELIMITER_TYPE_MAP
+            split_nodes_delimiter([node], "@@@", TextType.CODE)  
  
     def test_mismatched_delimiter_and_texttype_raises(self):
+        # delimiter '`' expects TextType.CODE
         node = TextNode("Some `code` text", TextType.TEXT)
 
         with self.assertRaises(ValueError) as context:
-            split_nodes_delimiter([node], "`", TextType.BOLD)  # delimiter '`' expects TextType.CODE
+            split_nodes_delimiter([node], "`", TextType.BOLD)  
  
 if __name__ == '__main__':
     unittest.main()
