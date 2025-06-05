@@ -13,8 +13,11 @@ def split_nodes_image(old_nodes):
     new_image_nodes = []
   
     for node in image_nodes:
+        if node.text_type != TextType.TEXT:
+            new_image_nodes_nodes.append(node)
+            continue
         split_nodes = re.split(img_pat, node.text)
-    
+        
         for i in range(0, len(split_nodes), 3):
             if split_nodes[i] != "":
                 new_image_nodes.append(TextNode(split_nodes[i], TextType.TEXT))
@@ -22,10 +25,11 @@ def split_nodes_image(old_nodes):
             if i + 2 < len(split_nodes):    
                 matches += 1
                 new_image_nodes.append(TextNode(split_nodes[i + 1], TextType.IMAGE, split_nodes[i + 2]))
-    if matches == 0:
-        raise Exception("Invalid image markdown")
+                if matches == 0:
+                    raise Exception("Invalid image markdown")
 
     return new_image_nodes
+
 ##################################################################################
 def split_nodes_links(old_nodes):
     """
@@ -38,6 +42,9 @@ def split_nodes_links(old_nodes):
     new_link_nodes = []
 
     for node in link_nodes:
+        if node.text_type != TextType.TEXT:
+            new_link_nodes.append(node)
+            continue
         split_nodes = re.split(link_pat, node.text)
 
         for i in range(0, len(split_nodes), 3):
@@ -47,8 +54,8 @@ def split_nodes_links(old_nodes):
             if i + 2 < len(split_nodes):
                 matches += 1
                 new_link_nodes.append(TextNode(split_nodes[i + 1], TextType.LINK, split_nodes[i + 2]))
-    if matches == 0:
-        raise Exception("Invalid link markdown")
+                if matches == 0:
+                    raise Exception("Invalid link markdown")
     
     return new_link_nodes
 ##################################################################################

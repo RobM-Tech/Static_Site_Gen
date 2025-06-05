@@ -31,3 +31,6 @@ class TestExtractMarkdown(unittest.TestCase):
         
         with self.assertRaises(Exception) as context:
             extract_markdown_links(test_text) 
+            
+if __name__ == '__main__':
+    unittest.main()
