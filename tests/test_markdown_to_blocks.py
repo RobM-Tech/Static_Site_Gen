@@ -27,5 +27,15 @@ class TestMarkdownToBlocks(unittest.TestCase):
         with self.assertRaises(ValueError):
             Markdown_to_Blocks("")
     ##################################################################################
+    def test_markdown_with_bold_and_italic(self):
+        input_text = "# Heading\n\nThis is **bold** text.\n\n_Italic_ and **bold** are cool."
+        expected_output = [
+            "# Heading",
+            "This is **bold** text.",
+            "_Italic_ and **bold** are cool."
+        ]
+        result = Markdown_to_Blocks(input_text)
+        self.assertEqual(result, expected_output)
+        
 if __name__ == '__main__':
     unittest.main()
